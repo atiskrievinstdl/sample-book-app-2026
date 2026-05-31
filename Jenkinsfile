@@ -3,38 +3,50 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                echo "Building sample-book-app.."
+                build()
             }
         }
         stage('deoloy-dev') {
             steps {
-                echo "Deployment to DEV environment.."
+                deploy("dev")
             }
         }
         stage('test-dev') {
             steps {
-                echo "Testing Sample Book App service on DEV environment..."
+	    	test("dev")
             }
         }
         stage('deploy-stg') {
             steps {
-                echo "Deployment to STG environment.."
+                deploy("stg")
             }
         }
         stage('test-stg') {
             steps {
-                echo "Testing Sample Book App service on STG environment..."
+	    	test("stg")
             }
         }
         stage('deploy-prd') {
             steps {
-                echo "Deployment to PRD environment.."
+                deploy("prd")
             }
         }
         stage('test-prd') {
             steps {
-                echo "Testing Sample Book App service on STG environment..."
+		test("PRD")
             }
         }
     }
+}
+
+def build(){
+        echo "Building sample-book-app.."
+}
+
+def deploy(String environment){
+	echo "Deployment to ${environment} environment.."
+}
+
+def test(String environment){
+	echo "Testing Sample Book App service on ${environment} environment.."
 }
