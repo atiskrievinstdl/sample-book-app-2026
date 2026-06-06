@@ -1,21 +1,18 @@
-name: 'Run API tests against Sample Book App'
-description: 'Run API tests against Sample Book App inside docker contaienr'
+name: 'Deploy Sample Book App'
+description: 'Deploy Sample Book App using docker compose'
 inputs:
   environment:
-    description: 'Environment where to run Sample Book App tests against'
+    description: 'Environment where to deploy Sample Book App'
     required: true
 runs:
   using: composite
   steps:
-    - name: Pull api-tests docker image
-      run: docker pull atiskrievinstdl/api-tests
+    - name: Pull sample-book-app docker image
+      run: docker pull atiskrievinstdl/sample-book-app
       shell: bash
-    - name: Run API tests
-      run: docker run --rm --network sample-book-app-compose-network -v $PWD/test-reports:/api-tests/mochawesome-report atiskrievinstdl/api-tests run BOOKS BOOKS_${{ inputs.environment }}
+    - name: Stop and remove existing service container
+      run: docker compose down sample-book-app-${{ inputs.environment }}
       shell: bash
-    - name: Upload artefacts
-      if: always()
-      uses: actions/upload-artifact@v7
-      with:
-        name: 'api-test-report'
-        path: test-reports
+    - name: Start service container for sample-book-app
+      run: docker compose up -d sample-book-app-${{ inputs.environment }}
+      shell: bash
