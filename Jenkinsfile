@@ -75,10 +75,10 @@ def deploy(String environment){
 
 def test(String environment){
     echo "Testing Sample Book App service on ${environment} environment..."
-    sh "docker pull atiskrievinstdl/api-tests"
+    sh "docker pull mtararujs/api-tests"
     def directory = pwd()
     sh "echo '${directory}'"
     sh "docker run --rm --network sample-book-app-compose-network -v '${directory}'/test-reports:/api-tests/mochawesome-report atiskrievinstdl/api-tests run BOOKS BOOKS_${environment}"
     // obtain/archive report
-    echo "Testing Sample Book App service on ${environment} finished..."
+    echo "Testing Sample Book App service on ${environment} environment finished..."
 }
