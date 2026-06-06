@@ -58,7 +58,11 @@ pipeline {
 
 def build(){
     echo "Building sample-book-app.."
-    sh "ls -a"
+    sh "docker build -t sample-book-app ."
+
+
+    echo "Pushing image to docker registry"
+    sh "docker push mtararujs/sample-book-app"
 }
 
 def deploy(String environment){
