@@ -1,8 +1,23 @@
+name: 'Run API tests against Sample Book App'
+description: 'Run API tests against Sample Book App inside docker contaienr'
+inputs:
+  environment:
+    description: 'Environment where to run Sample Book App tests against'
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Pull api-tests docker image
+      run: docker pull mtararujs/api-tests
+      shell: bash
+    - name: Run API tests
+      run: docker run --rm --network sample-book-app-compose-network -v $PWD/test-reports:/api-tests/mochawesome-report mtararujs/api-tests run BOOKS BOOKS_${{ inputs.environment }}
+      shell: bash
 name: Sample Book App
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "Day2" ]
   workflow_dispatch:
 
 jobs:
@@ -18,14 +33,15 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/deploy
         with:
-          environment: 'dev'
+            environment: 'dev'
   test-dev:
     runs-on: self-hosted
     needs: [deploy-dev]
     steps:
       - uses: actions/checkout@v4
-      - name: Print process name
-        run: echo "Testing Sample Book App service on DEV environment..." 
+      - uses: ./.github/actions/test
+        with:
+            environment: 'DEV'
   deploy-stg:
     runs-on: self-hosted
     needs: [test-dev]
@@ -33,14 +49,15 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/deploy
         with:
-          environment: 'stg'
+            environment: 'stg'
   test-stg:
     runs-on: self-hosted
     needs: [deploy-stg]
     steps:
       - uses: actions/checkout@v4
-      - name: Print process name
-        run: echo "Testing Sample Book App service on STG environment..." 
+      - uses: ./.github/actions/test
+        with:
+            environment: 'STG'
   deploy-prd:
     runs-on: self-hosted
     needs: [test-stg]
@@ -48,12 +65,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/deploy
         with:
-          environment: 'prd'
+            environment: 'prd'
   test-prd:
     runs-on: self-hosted
     needs: [deploy-prd]
     steps:
       - uses: actions/checkout@v4
-      - name: Print process name
-        run: echo "Testing Sample Book App service on PRD environname Sample Book App"
-
+      - uses: ./.github/actions/test
+        with:
+            environment: 'PRD'
