@@ -79,6 +79,6 @@ def test(String environment){
     def directory = pwd()
     sh "echo '${directory}'"
     sh "docker run --rm --network sample-book-app-compose-network -v '${directory}'/test-reports:/api-tests/mochawesome-report atiskrievinstdl/api-tests run BOOKS BOOKS_${environment}"
-    // obtain/archive report
+    archiveArtifacts allowEmptyArchive: true, artifacts: 'test-reports/**', followSymlinks: false
     echo "Testing Sample Book App service on ${environment} environment finished..."
 }
