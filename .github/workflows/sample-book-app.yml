@@ -55,5 +55,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Print process name
-        run: echo "Testing Sample Book App service on PRD environname: Sample Book App"
+        run: echo "Testing Sample Book App service on PRD environname Sample Book App"
 
