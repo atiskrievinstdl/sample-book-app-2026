@@ -58,7 +58,7 @@ pipeline {
 
 def build(){
     echo "Building sample-book-app.."
-    sh "docker build -t sample-book-app ."
+    sh "docker build -t atiskrievinstdl/sample-book-app ."
 
 
     echo "Pushing image to docker registry"
