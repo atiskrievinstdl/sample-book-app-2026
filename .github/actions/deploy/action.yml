@@ -11,7 +11,7 @@ runs:
       run: docker pull atiskrievinstdl/api-tests
       shell: bash
     - name: Run API tests
-      run: docker run --rm --network sample-book-app-compose-network -v $PWD/test-reports:/api-tests/mochawesome-report mtararujs/api-tests run BOOKS BOOKS_${{ inputs.environment }}
+      run: docker run --rm --network sample-book-app-compose-network -v $PWD/test-reports:/api-tests/mochawesome-report atiskrievinstdl/api-tests run BOOKS BOOKS_${{ inputs.environment }}
       shell: bash
     - uses: actions/upload-artifact@v7
       with:
