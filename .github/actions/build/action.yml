@@ -7,5 +7,5 @@ runs:
       run: docker build -t atiskrievinstdl/sample-book-app .
       shell: bash
     - name: Pushing image to docker registry..
-      run: docker push atiskrievins/sample-book-app
+      run: docker push atiskrievinstdl/sample-book-app
       shell: bash
