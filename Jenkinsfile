@@ -69,7 +69,7 @@ def deploy(String environment){
     echo "Deployment to ${environment} environment.."
     sh "docker pull atiskrievinstdl/sample-book-app"
     sh "docker compose down sample-book-app-${environment.toLowerCase()}"
-    sh "docker compose up sample-book-app-${environment.toLowerCase()}"
+    sh "docker compose up -d sample-book-app-${environment.toLowerCase()}"
     echo "Deployment to ${environment} environment finished.."
 }
 
