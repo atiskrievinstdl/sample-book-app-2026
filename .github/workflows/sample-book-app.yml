@@ -49,7 +49,7 @@ jobs:
         run: echo "Deployment to PRD environment.." 
   test-prd:
     runs-on: ubuntu-latest
-    neds: [deploy-prd]
+    needs: [deploy-prd]
     steps:
       - uses: actions/checkout@v4
       - name: Print process name
