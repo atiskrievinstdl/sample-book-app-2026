@@ -8,7 +8,7 @@ runs:
   using: composite
   steps:
     - name: Pull api-tests docker image
-      run: docker pull mtararujs/api-tests
+      run: docker pull atiskrievinstdl/api-tests
       shell: bash
     - name: Run API tests
       run: docker run --rm --network sample-book-app-compose-network -v $PWD/test-reports:/api-tests/mochawesome-report mtararujs/api-tests run BOOKS BOOKS_${{ inputs.environment }}
